@@ -1,10 +1,12 @@
-<?php 
+<?php
+
+declare(strict_types=1);
 
 namespace sammaye\pq;
 
 use Yii;
+use yii\db\Connection;
 use yii\db\Query as BaseQuery;
-use sammaye\pq\PagedQueryResult;
 
 class Query extends BaseQuery
 {
@@ -25,14 +27,17 @@ class Query extends BaseQuery
      * ```
      *
      * @param integer $batchSize the number of records to be fetched in each batch.
-     * @param Connection $db the database connection. If not set, the "db" application component will be used.
-     * @return BatchQueryResult the batch query result. It implements the [[\Iterator]] interface
+     * @param Connection|null $db the database connection. If not set, the "db" application component will be used.
+     * @return PagedQueryResult the batch query result. It implements the [[\Iterator]] interface
      * and can be traversed to retrieve the data in batches.
+     * @noinspection PhpUnhandledExceptionInspection
+     * @noinspection PhpDocMissingThrowsInspection
      */
-    public function batch($batchSize = 100, $page = true, $db = null)
+    public function batch($batchSize = 100, ?COnnection $db = null, bool $page = true): PagedQueryResult
     {
+        /** @var PagedQueryResult */
         return Yii::createObject([
-            'class' => PagedQueryResult::className(),
+            'class' => PagedQueryResult::class,
             'query' => $this,
             'batchSize' => $batchSize,
             'db' => $db,
@@ -53,14 +58,17 @@ class Query extends BaseQuery
      * ```
      *
      * @param integer $batchSize the number of records to be fetched in each batch.
-     * @param Connection $db the database connection. If not set, the "db" application component will be used.
-     * @return BatchQueryResult the batch query result. It implements the [[\Iterator]] interface
+     * @param Connection|null $db the database connection. If not set, the "db" application component will be used.
+     * @return PagedQueryResult the batch query result. It implements the [[\Iterator]] interface
      * and can be traversed to retrieve the data in batches.
+     * @noinspection PhpUnhandledExceptionInspection
+     * @noinspection PhpDocMissingThrowsInspection
      */
-    public function each($batchSize = 100, $page = true, $db = null)
+    public function each($batchSize = 100, ?Connection $db = null, bool $page = true): PagedQueryResult
     {
+        /** @var PagedQueryResult */
         return Yii::createObject([
-            'class' => PagedQueryResult::className(),
+            'class' => PagedQueryResult::class,
             'query' => $this,
             'batchSize' => $batchSize,
             'db' => $db,
