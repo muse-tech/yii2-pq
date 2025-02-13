@@ -13,6 +13,7 @@ use yii\base\BaseObject;
 use yii\db\Connection;
 use yii\db\DataReader;
 use yii\db\Exception;
+use yii\db\Query;
 
 /**
  * BatchQueryResult represents a batch query from which you can retrieve data in batches.
